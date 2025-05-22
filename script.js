@@ -389,12 +389,14 @@ function displayLeads() {
                 </td>
                 <td>${lead.attendanceTime || '-'}</td>
                 <td>
-                    <button class="btn btn-ghost" onclick="viewLeadDetails(${lead.id})" title="Ver detalhes">
-                        <i data-lucide="eye"></i>
-                    </button>
-                    <button class="btn btn-ghost" onclick="copyLink('${lead.shortLink}')" title="Copiar link">
-                        <i data-lucide="link-2"></i>
-                    </button>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-ghost btn-icon" onclick="viewLeadDetails(${lead.id})" title="Ver detalhes">
+                            <i data-lucide="eye"></i>
+                        </button>
+                        <button class="btn btn-ghost btn-icon" onclick="copyLink('${lead.shortLink}')" title="Copiar link">
+                            <i data-lucide="link-2"></i>
+                        </button>
+                    </div>
                 </td>
             </tr>
         `;
