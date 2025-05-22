@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Tracking de Leads</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/lucide.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-left">
+                    <i data-lucide="link" class="header-icon"></i>
+                    <h1>Sistema de Tracking de Leads</h1>
+                </div>
+                <div class="header-right">
+                    <span class="user-info">Marketing Team</span>
+                    <div class="user-avatar">MT</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Stats Cards -->
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-info">
+                            <p class="stat-title">Total de Leads</p>
+                            <p class="stat-value" id="totalLeads">0</p>
+                        </div>
+                        <i data-lucide="users" class="stat-icon stat-icon-blue"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-info">
+                            <p class="stat-title">Atendidos</p>
+                            <p class="stat-value" id="attendedLeads">0</p>
+                        </div>
+                        <i data-lucide="check-circle" class="stat-icon stat-icon-green"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-info">
+                            <p class="stat-title">Não Atendidos</p>
+                            <p class="stat-value" id="pendingLeads">0</p>
+                        </div>
+                        <i data-lucide="clock" class="stat-icon stat-icon-orange"></i>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-info">
+                            <p class="stat-title">Taxa de Conversão</p>
+                            <p class="stat-value" id="conversionRate">0%</p>
+                        </div>
+                        <i data-lucide="trending-up" class="stat-icon stat-icon-blue"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filter-section">
+                <div class="filter-controls">
+                    <div class="search-container">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="searchInput" placeholder="Buscar por lead ou empresa..." class="search-input">
+                    </div>
+                    
+                    <select id="statusFilter" class="filter-select">
+                        <option value="">Todos os Status</option>
+                        <option value="atendido">Atendido</option>
+                        <option value="nao-atendido">Não Atendido</option>
+                    </select>
+                    
+                    <select id="consultantFilter" class="filter-select">
+                        <option value="">Todos os Consultores</option>
+                    </select>
+                    
+                    <select id="queueFilter" class="filter-select">
+                        <option value="">Todas as Filas</option>
+                    </select>
+                </div>
+                
+                <div class="filter-actions">
+                    <button id="refreshBtn" class="btn btn-primary">
+                        <i data-lucide="rotate-ccw"></i>
+                        Atualizar
+                    </button>
+                    <button id="exportBtn" class="btn btn-success">
+                        <i data-lucide="download"></i>
+                        Exportar CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-container">
+                <div class="table-wrapper">
+                    <table class="leads-table">
+                        <thead>
+                            <tr>
+                                <th data-sort="isAttended">
+                                    Status <i data-lucide="arrow-up-down" class="sort-icon"></i>
+                                </th>
+                                <th data-sort="name">
+                                    Lead <i data-lucide="arrow-up-down" class="sort-icon"></i>
+                                </th>
+                                <th data-sort="company">
+                                    Empresa <i data-lucide="arrow-up-down" class="sort-icon"></i>
+                                </th>
+                                <th data-sort="queue">
+                                    Fila <i data-lucide="arrow-up-down" class="sort-icon"></i>
+                                </th>
+                                <th data-sort="consultant">
+                                    Consultor <i data-lucide="arrow-up-down" class="sort-icon"></i>
+                                </th>
+                                <th data-sort="attendanceTime">
+                                    Tempo de Atendimento <i data-lucide="arrow-up-down" class="sort-icon"></i>
+                                </th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTableBody">
+                            <!-- Leads will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination-container">
+                    <div class="pagination-info">
+                        <span id="paginationInfo">Mostrando 0 - 0 de 0 leads</span>
+                    </div>
+                    <div class="pagination-controls">
+                        <button id="prevPageBtn" class="btn btn-outline" disabled>
+                            <i data-lucide="chevron-left"></i>
+                            Anterior
+                        </button>
+                        <div class="page-numbers" id="pageNumbers">
+                            <!-- Page numbers will be inserted here -->
+                        </div>
+                        <button id="nextPageBtn" class="btn btn-outline" disabled>
+                            Próximo
+                            <i data-lucide="chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="pagination-size">
+                        <label for="pageSizeSelect">Itens por página:</label>
+                        <select id="pageSizeSelect" class="filter-select">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detalhes do Lead</h2>
+                <button class="modal-close" id="modalCloseBtn">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Lead details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Carregando dados...</p>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
