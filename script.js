@@ -26,6 +26,11 @@ const prevPageBtn = document.getElementById('prevPageBtn');
 const nextPageBtn = document.getElementById('nextPageBtn');
 const pageSizeSelect = document.getElementById('pageSizeSelect');
 
+// Dark Mode Elements (added for this task)
+const darkModeToggle = document.getElementById('darkModeToggle');
+const body = document.body;
+
+
 // Sample data (simulating API response)
 const sampleData = {
     leads: [
@@ -359,6 +364,7 @@ function displayLeads() {
                 </td>
             </tr>
         `;
+        // No need to call lucide.createIcons() here as the empty state doesn't use them.
         return;
     }
     
@@ -402,7 +408,7 @@ function displayLeads() {
         `;
     }).join('');
     
-    // Re-initialize Lucide icons
+    // Re-initialize Lucide icons after table rows are rendered
     lucide.createIcons();
 }
 
@@ -425,10 +431,10 @@ function updatePagination() {
     const endIndex = Math.min(startIndex + pageSize - 1, filteredLeads.length);
     
     // Update pagination info
-    paginationInfo.textContent = `Mostrando ${startIndex} - ${endIndex} de ${filteredLeads.length} leads`;
+    paginationInfo.textContent = `Mostrando ${filteredLeads.length === 0 ? 0 : startIndex} - ${endIndex} de ${filteredLeads.length} leads`;
     
     // Update page controls
-    prevPageBtn.disabled = currentPage === 1;
+    prevPageBtn.disabled = currentPage === 1 || totalPages === 0;
     nextPageBtn.disabled = currentPage === totalPages || totalPages === 0;
     
     // Update page numbers
@@ -541,7 +547,11 @@ function closeModal() {
 // Utility functions
 function copyLink(link) {
     navigator.clipboard.writeText(link).then(() => {
-        alert('Link copiado para a área de transferência!');
+        // Simple feedback; consider a more robust notification system for a real app
+        const originalButtonText = exportBtn.innerHTML; // Example: temporarily change export button for feedback
+        exportBtn.innerHTML = 'Link Copiado!';
+        setTimeout(() => { exportBtn.innerHTML = originalButtonText; }, 2000);
+
     }).catch(() => {
         alert('Erro ao copiar o link.');
     });
@@ -560,10 +570,10 @@ function exportToCSV() {
     ]);
     
     const csvContent = [headers, ...rows]
-        .map(row => row.map(field => `"${field}"`).join(','))
+        .map(row => row.map(field => `"${String(field).replace(/"/g, '""')}"`).join(',')) // Handle quotes in fields
         .join('\n');
     
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const blob = new Blob([String.fromCharCode(0xFEFF), csvContent], { type: 'text/csv;charset=utf-8;' }); // Add BOM for Excel
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.href = url;
@@ -572,6 +582,7 @@ function exportToCSV() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
 }
 
 // Sorting functions
@@ -582,40 +593,90 @@ function handleSort(field) {
         sortField = field;
         sortDirection = 'asc';
     }
-    
+    // Update sort icons
+    document.querySelectorAll('th[data-sort]').forEach(th => {
+        const icon = th.querySelector('.sort-icon');
+        if (icon) { // Check if icon element exists
+            if (th.getAttribute('data-sort') === sortField) {
+                icon.setAttribute('data-lucide', sortDirection === 'asc' ? 'arrow-up' : 'arrow-down');
+            } else {
+                icon.setAttribute('data-lucide', 'arrow-up-down');
+            }
+        }
+    });
+    lucide.createIcons(); // Refresh icons
     filterAndDisplayLeads();
 }
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Lucide icons
-    lucide.createIcons();
+    // Dark Mode Logic
+    const sunIcon = '<i data-lucide="sun"></i>';
+    const moonIcon = '<i data-lucide="moon"></i>';
+
+    const enableDarkMode = () => {
+        body.classList.add('dark-mode');
+        if (darkModeToggle) darkModeToggle.innerHTML = sunIcon;
+        localStorage.setItem('darkMode', 'enabled');
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    };
+
+    const disableDarkMode = () => {
+        body.classList.remove('dark-mode');
+        if (darkModeToggle) darkModeToggle.innerHTML = moonIcon;
+        localStorage.setItem('darkMode', 'disabled');
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    };
+
+    // Check local storage for mode preference
+    // Ensure darkModeToggle exists before trying to set its content or add listeners
+    if (darkModeToggle) {
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            enableDarkMode();
+        } else {
+            disableDarkMode(); // Default to light mode, ensures moon icon is set
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            if (body.classList.contains('dark-mode')) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        });
+    }
+    // End Dark Mode Logic
+    
+    // Initialize Lucide icons (this will also render the initial dark mode toggle icon)
+    if (typeof lucide !== 'undefined') lucide.createIcons();
     
     // Load initial data
     fetchData();
     
     // Filter event listeners
-    searchInput.addEventListener('input', filterAndDisplayLeads);
-    statusFilter.addEventListener('change', filterAndDisplayLeads);
-    consultantFilter.addEventListener('change', filterAndDisplayLeads);
-    queueFilter.addEventListener('change', filterAndDisplayLeads);
+    if (searchInput) searchInput.addEventListener('input', filterAndDisplayLeads);
+    if (statusFilter) statusFilter.addEventListener('change', filterAndDisplayLeads);
+    if (consultantFilter) consultantFilter.addEventListener('change', filterAndDisplayLeads);
+    if (queueFilter) queueFilter.addEventListener('change', filterAndDisplayLeads);
     
     // Button event listeners
-    refreshBtn.addEventListener('click', fetchData);
-    exportBtn.addEventListener('click', exportToCSV);
+    if (refreshBtn) refreshBtn.addEventListener('click', fetchData);
+    if (exportBtn) exportBtn.addEventListener('click', exportToCSV);
     
     // Modal event listeners
-    modalCloseBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
+    if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
     
     // Pagination event listeners
-    prevPageBtn.addEventListener('click', () => goToPage(currentPage - 1));
-    nextPageBtn.addEventListener('click', () => goToPage(currentPage + 1));
-    pageSizeSelect.addEventListener('change', changePageSize);
+    if (prevPageBtn) prevPageBtn.addEventListener('click', () => goToPage(currentPage - 1));
+    if (nextPageBtn) nextPageBtn.addEventListener('click', () => goToPage(currentPage + 1));
+    if (pageSizeSelect) pageSizeSelect.addEventListener('change', changePageSize);
     
     // Sort event listeners
     document.querySelectorAll('th[data-sort]').forEach(header => {
@@ -627,7 +688,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Keyboard shortcuts
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('show')) {
+        if (e.key === 'Escape' && modal && modal.classList.contains('show')) {
             closeModal();
         }
     });
