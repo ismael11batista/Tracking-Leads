@@ -10,6 +10,7 @@ body {
     background-color: #f9fafb;
     color: #263238;
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -23,6 +24,7 @@ body {
     background: white;
     border-bottom: 1px solid #d5dde0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .header-content {
@@ -48,6 +50,7 @@ body {
     font-size: 1.25rem;
     font-weight: 500;
     color: #263238;
+    transition: color 0.3s ease;
 }
 
 .header-right {
@@ -59,6 +62,7 @@ body {
 .user-info {
     font-size: 0.875rem;
     color: #546e7a;
+    transition: color 0.3s ease;
 }
 
 .user-avatar {
@@ -93,6 +97,7 @@ body {
     padding: 1.5rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
     border-left: 4px solid #1976d2;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-left-color 0.3s ease;
 }
 
 .stat-content {
@@ -106,6 +111,7 @@ body {
     font-weight: 500;
     color: #546e7a;
     margin-bottom: 0.25rem;
+    transition: color 0.3s ease;
 }
 
 .stat-value {
@@ -135,6 +141,7 @@ body {
     gap: 1.5rem;
     justify-content: space-between;
     align-items: flex-start;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .filter-controls {
@@ -160,6 +167,7 @@ body {
     width: 1rem;
     height: 1rem;
     color: #9ca3af;
+    transition: color 0.3s ease;
 }
 
 .search-input {
@@ -169,8 +177,9 @@ body {
     border-radius: 0.375rem;
     font-size: 0.875rem;
     background: white;
+    color: #263238; /* Added explicit color for transition */
     height: 2.5rem;
-    transition: all 0.15s ease-in-out;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, color 0.15s ease-in-out;
 }
 
 .search-input:focus {
@@ -181,6 +190,7 @@ body {
 
 .search-input::placeholder {
     color: #9ca3af;
+    transition: color 0.3s ease;
 }
 
 .filter-select {
@@ -189,9 +199,10 @@ body {
     border-radius: 0.375rem;
     font-size: 0.875rem;
     background: white;
+    color: #263238; /* Added explicit color for transition */
     min-width: 12rem;
     height: 2.5rem;
-    transition: all 0.15s ease-in-out;
+    transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, color 0.15s ease-in-out;
     cursor: pointer;
 }
 
@@ -312,6 +323,7 @@ body {
     border-radius: 0.5rem;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.1);
     overflow: hidden;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .table-wrapper {
@@ -336,7 +348,7 @@ body {
     user-select: none;
     border-bottom: 2px solid #e0e0e0;
     white-space: nowrap;
-    transition: all 0.15s ease-in-out;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
 .leads-table th:hover {
@@ -348,11 +360,16 @@ body {
     padding: 1.25rem 1.5rem;
     border-top: 1px solid #f0f0f0;
     vertical-align: middle;
+    transition: border-color 0.3s ease;
+}
+
+.leads-table tr { /* Added transition to tr itself */
+    transition: background-color 0.15s ease;
 }
 
 .leads-table tr:hover {
     background: #f9fafb;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    /* Removed box-shadow from hover as it might be too much with dark mode */
 }
 
 .sort-icon {
@@ -373,6 +390,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.025em;
     border: 1px solid transparent;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .status-attended {
@@ -400,6 +418,7 @@ body {
     border: 1px solid #bbdefb;
     text-transform: uppercase;
     letter-spacing: 0.025em;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* Consultant Info */
@@ -426,6 +445,7 @@ body {
     font-size: 0.875rem;
     font-weight: 500;
     color: #263238;
+    transition: color 0.3s ease;
 }
 
 /* Lead Info */
@@ -439,11 +459,13 @@ body {
     font-size: 0.875rem;
     font-weight: 500;
     color: #263238;
+    transition: color 0.3s ease;
 }
 
 .lead-email {
     font-size: 0.875rem;
     color: #546e7a;
+    transition: color 0.3s ease;
 }
 
 /* Pagination */
@@ -456,11 +478,13 @@ body {
     flex-wrap: wrap;
     gap: 1.5rem;
     background: #fafbfc;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .pagination-info {
     font-size: 0.875rem;
     color: #546e7a;
+    transition: color 0.3s ease;
 }
 
 .pagination-controls {
@@ -509,6 +533,7 @@ body {
     gap: 0.5rem;
     font-size: 0.875rem;
     color: #546e7a;
+    transition: color 0.3s ease;
 }
 
 /* Modal */
@@ -536,6 +561,7 @@ body {
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .modal-header {
@@ -544,12 +570,14 @@ body {
     align-items: center;
     padding: 1.5rem;
     border-bottom: 1px solid #f0f0f0;
+    transition: border-color 0.3s ease;
 }
 
 .modal-header h2 {
     font-size: 1.125rem;
     font-weight: 600;
     color: #263238;
+    transition: color 0.3s ease;
 }
 
 .modal-close {
@@ -558,6 +586,7 @@ body {
     cursor: pointer;
     padding: 0.25rem;
     color: #546e7a;
+    transition: color 0.3s ease;
 }
 
 .modal-close:hover {
@@ -580,11 +609,13 @@ body {
     font-size: 0.875rem;
     font-weight: 500;
     color: #546e7a;
+    transition: color 0.3s ease;
 }
 
 .modal-value {
     font-size: 0.875rem;
     color: #263238;
+    transition: color 0.3s ease;
 }
 
 .modal-link {
@@ -608,6 +639,7 @@ body {
     justify-content: center;
     flex-direction: column;
     gap: 1rem;
+    transition: background-color 0.3s ease;
 }
 
 .loading-spinner.show {
@@ -633,6 +665,7 @@ body {
     text-align: center;
     padding: 3rem 1.5rem;
     color: #546e7a;
+    transition: color 0.3s ease;
 }
 
 .empty-state-icon {
@@ -645,6 +678,7 @@ body {
     font-weight: 500;
     color: #263238;
     margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
 }
 
 .empty-state p {
@@ -732,4 +766,230 @@ body {
     .modal-body {
         padding: 1rem;
     }
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #1f2937; /* Dark slate gray - Tailwind gray-800 */
+    color: #e5e7eb; /* Light gray for text - Tailwind gray-200 */
+}
+
+body.dark-mode .header {
+    background: #111827; /* Darker gray for header - Tailwind gray-900 */
+    border-bottom: 1px solid #374151; /* Tailwind gray-700 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+}
+
+body.dark-mode .header h1,
+body.dark-mode .user-info {
+    color: #f3f4f6; /* Tailwind gray-100, slightly brighter for titles */
+}
+
+body.dark-mode .stat-card,
+body.dark-mode .filter-section,
+body.dark-mode .table-container {
+    background-color: #111827; /* Tailwind gray-900 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 8px 16px rgba(0,0,0,0.4);
+}
+body.dark-mode .modal-content { /* Modal content might need slightly different shadow or bg */
+    background-color: #1f2937; /* Tailwind gray-800, slightly lighter than pure black elements */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.5);
+}
+
+
+body.dark-mode .stat-card {
+    border-left-color: #3b82f6; /* Brighter blue for accent - Tailwind blue-500 */
+}
+
+body.dark-mode .stat-title,
+body.dark-mode .search-input::placeholder,
+body.dark-mode .pagination-info,
+body.dark-mode .pagination-size,
+body.dark-mode .modal-label,
+body.dark-mode .empty-state {
+    color: #9ca3af; /* Medium gray for less prominent text - Tailwind gray-400 */
+}
+
+body.dark-mode .search-input,
+body.dark-mode .filter-select {
+    background-color: #374151; /* Dark input background - Tailwind gray-700 */
+    color: #e5e7eb; /* Tailwind gray-200 */
+    border-color: #4b5563; /* Slightly lighter border for inputs - Tailwind gray-600 */
+}
+
+body.dark-mode .search-input:focus,
+body.dark-mode .filter-select:focus {
+    border-color: #3b82f6; /* Tailwind blue-500 */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* Adjusted focus ring for dark bg */
+}
+
+body.dark-mode .search-icon {
+    color: #9ca3af; /* Tailwind gray-400 */
+}
+
+body.dark-mode .btn-outline {
+    background: transparent;
+    color: #9ca3af; /* Tailwind gray-400 */
+    border: 1px solid #4b5563; /* Tailwind gray-600 */
+}
+
+body.dark-mode .btn-outline:hover:not(:disabled) {
+    background: #374151; /* Tailwind gray-700 */
+    border-color: #60a5fa; /* Lighter blue for hover - Tailwind blue-400 */
+    color: #60a5fa; /* Lighter blue for hover - Tailwind blue-400 */
+}
+
+body.dark-mode .btn-ghost {
+    color: #9ca3af; /* Tailwind gray-400 */
+}
+
+body.dark-mode .btn-ghost:hover:not(:disabled) {
+    background: #374151; /* Tailwind gray-700 */
+    color: #e5e7eb; /* Tailwind gray-200 */
+}
+
+body.dark-mode .leads-table th {
+    background: #1f2937; /* Tailwind gray-800 */
+    color: #d1d5db; /* Tailwind gray-300 */
+    border-bottom: 2px solid #374151; /* Tailwind gray-700 */
+}
+
+body.dark-mode .leads-table th:hover {
+    background: #374151; /* Tailwind gray-700 */
+    color: #e5e7eb; /* Tailwind gray-200 */
+}
+
+body.dark-mode .leads-table td {
+    border-top: 1px solid #374151; /* Tailwind gray-700 */
+}
+
+body.dark-mode .leads-table tr:hover {
+    background: #2b3647; /* Slightly lighter than gray-800, custom shade */
+}
+
+body.dark-mode .status-attended {
+    background: #064e3b; /* Darker green - Tailwind green-900 */
+    color: #a7f3d0; /* Light green text - Tailwind green-200 */
+    border-color: #059669; /* Mid green border - Tailwind green-600 */
+}
+
+body.dark-mode .status-pending {
+    background: #7c2d12; /* Darker orange/brown - Tailwind orange-900 */
+    color: #fed7aa; /* Light orange text - Tailwind orange-200 */
+    border-color: #ea580c; /* Mid orange/brown border - Tailwind orange-600 */
+}
+
+body.dark-mode .queue-badge {
+    background: #1e3a8a; /* Darker blue - Tailwind blue-900 */
+    color: #bfdbfe; /* Light blue text - Tailwind blue-200 */
+    border-color: #2563eb; /* Mid blue border - Tailwind blue-600 */
+}
+
+body.dark-mode .consultant-name,
+body.dark-mode .lead-name,
+body.dark-mode .modal-header h2,
+body.dark-mode .modal-value,
+body.dark-mode .empty-state h3 {
+    color: #e5e7eb; /* Tailwind gray-200 */
+}
+
+body.dark-mode .lead-email,
+body.dark-mode .modal-close {
+    color: #9ca3af; /* Tailwind gray-400 */
+}
+body.dark-mode .modal-close:hover {
+    color: #e5e7eb; /* Tailwind gray-200 */
+}
+
+
+body.dark-mode .pagination-container {
+    background: #111827; /* Tailwind gray-900 */
+    border-top: 1px solid #374151; /* Tailwind gray-700 */
+}
+
+body.dark-mode .page-number {
+    background: #374151; /* Tailwind gray-700 */
+    color: #d1d5db; /* Tailwind gray-300 */
+    border-color: #4b5563; /* Tailwind gray-600 */
+}
+
+body.dark-mode .page-number:hover:not(.active) {
+    background: #4b5563; /* Tailwind gray-600 */
+    border-color: #60a5fa; /* Tailwind blue-400 */
+    color: #e5e7eb; /* Tailwind gray-200 */
+}
+
+body.dark-mode .page-number.active {
+    background: #3b82f6; /* Tailwind blue-500 */
+    color: white;
+    border-color: #3b82f6; /* Tailwind blue-500 */
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.4); /* Adjusted active shadow */
+}
+
+body.dark-mode .modal-header {
+    border-bottom: 1px solid #374151; /* Tailwind gray-700 */
+}
+
+body.dark-mode .loading-spinner {
+    background: rgba(17, 24, 39, 0.9); /* Tailwind gray-900 with opacity */
+}
+
+body.dark-mode .spinner {
+    border-color: #4b5563; /* Tailwind gray-600 for spinner track */
+    border-top-color: #3b82f6; /* Tailwind blue-500 for spinner active part */
+}
+
+/* Ensure Lucide icons inherit color correctly or set explicitly */
+body.dark-mode .lucide, body.dark-mode [data-lucide] {
+    /* color: inherit; */ /* This can work if parent color is desired */
+    /* Or set a general icon color for dark mode if 'inherit' is problematic */
+     color: #d1d5db; /* Default icon color - Tailwind gray-300 */
+}
+
+body.dark-mode .btn-ghost .lucide, body.dark-mode .btn-ghost [data-lucide],
+body.dark-mode .btn-outline .lucide, body.dark-mode .btn-outline [data-lucide] {
+    color: #9ca3af; /* Match button text color - Tailwind gray-400 */
+}
+body.dark-mode .btn-ghost:hover:not(:disabled) .lucide, body.dark-mode .btn-ghost:hover:not(:disabled) [data-lucide] {
+    color: #e5e7eb; /* Match button text hover color - Tailwind gray-200 */
+}
+body.dark-mode .btn-outline:hover:not(:disabled) .lucide, body.dark-mode .btn-outline:hover:not(:disabled) [data-lucide] {
+    color: #60a5fa; /* Match button text hover color - Tailwind blue-400 */
+}
+
+body.dark-mode .header-icon {
+    color: #60a5fa; /* Tailwind blue-400 for header icon */
+}
+
+body.dark-mode .stat-icon-blue { color: #60a5fa; } /* Tailwind blue-400 */
+body.dark-mode .stat-icon-green { color: #4ade80; } /* Tailwind green-400 */
+body.dark-mode .stat-icon-orange { color: #fb923c; } /* Tailwind orange-400 */
+
+body.dark-mode .btn-primary .lucide, body.dark-mode .btn-primary [data-lucide],
+body.dark-mode .btn-success .lucide, body.dark-mode .btn-success [data-lucide] {
+    color: white; /* Ensure icons on solid buttons remain white */
+}
+
+body.dark-mode .page-number.active .lucide, body.dark-mode .page-number.active [data-lucide],
+body.dark-mode .pagination-controls .btn .lucide, body.dark-mode .pagination-controls .btn [data-lucide] {
+     color: inherit; /* Let pagination control buttons inherit color */
+}
+
+body.dark-mode .modal-close .lucide, body.dark-mode .modal-close [data-lucide] {
+    color: #9ca3af; /* Tailwind gray-400 */
+}
+body.dark-mode .modal-close:hover .lucide, body.dark-mode .modal-close:hover [data-lucide] {
+    color: #e5e7eb; /* Tailwind gray-200 */
+}
+
+/* Dark mode focus rings for better visibility */
+body.dark-mode .btn:focus,
+body.dark-mode .search-input:focus,
+body.dark-mode .filter-select:focus,
+body.dark-mode .page-number:focus {
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5); /* Tailwind blue-400 with 50% opacity */
+}
+
+body.dark-mode .page-number.active:focus {
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5), 0 0 0 2px rgba(59, 130, 246, 0.4); /* Combine with existing active shadow */
 }
