@@ -203,6 +203,11 @@ body {
     border-color: #90a4ae;
 }
 
+#pageSizeSelect {
+    min-width: auto; /* Override general .filter-select min-width */
+    width: 8rem;    /* Set a specific, smaller width */
+}
+
 .filter-actions {
     display: flex;
     gap: 0.5rem;
@@ -357,6 +362,10 @@ body {
 .leads-table tr:hover {
     background: #f9fafb;
     /* Removed box-shadow from hover as it might be too much with dark mode */
+}
+
+.clickable-row:hover {
+    cursor: pointer;
 }
 
 .sort-icon {
@@ -537,7 +546,7 @@ body {
 .modal-content {
     background: white;
     border-radius: 0.5rem;
-    max-width: 32rem;
+    max-width: 48rem; /* Changed from 32rem */
     width: 90%;
     max-height: 90vh;
     overflow-y: auto;

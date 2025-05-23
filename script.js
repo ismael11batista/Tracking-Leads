@@ -357,7 +357,7 @@ function displayLeads() {
     if (paginatedLeads.length === 0) {
         leadsTableBody.innerHTML = `
             <tr>
-                <td colspan="7" class="empty-state">
+                <td colspan="6" class="empty-state"> 
                     <div class="empty-state-icon">🔍</div>
                     <h3>Nenhum resultado encontrado</h3>
                     <p>Tente ajustar os filtros ou realizar uma nova busca.</p>
@@ -373,7 +373,7 @@ function displayLeads() {
         const statusText = lead.isAttended ? '✓ Atendido' : '⏰ Não Atendido';
         
         return `
-            <tr>
+            <tr class="clickable-row" onclick="viewLeadDetails(${lead.id})">
                 <td>
                     <span class="status-badge ${statusClass}">${statusText}</span>
                 </td>
@@ -393,16 +393,6 @@ function displayLeads() {
                     </div>
                 </td>
                 <td>${lead.attendanceTime || '-'}</td>
-                <td>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button class="btn btn-ghost btn-icon" onclick="viewLeadDetails(${lead.id})" title="Ver detalhes">
-                            <i data-lucide="eye"></i>
-                        </button>
-                        <button class="btn btn-ghost btn-icon" onclick="copyLink('${lead.shortLink}')" title="Copiar link">
-                            <i data-lucide="link-2"></i>
-                        </button>
-                    </div>
-                </td>
             </tr>
         `;
     }).join('');
@@ -546,18 +536,6 @@ function closeModal() {
 }
 
 // Utility functions
-function copyLink(link) {
-    navigator.clipboard.writeText(link).then(() => {
-        // Simple feedback; consider a more robust notification system for a real app
-        const originalButtonText = exportBtn.innerHTML; // Example: temporarily change export button for feedback
-        exportBtn.innerHTML = 'Link Copiado!';
-        setTimeout(() => { exportBtn.innerHTML = originalButtonText; }, 2000);
-
-    }).catch(() => {
-        alert('Erro ao copiar o link.');
-    });
-}
-
 function exportToCSV() {
     const headers = ['Status', 'Lead', 'Email', 'Empresa', 'Fila', 'Consultor', 'Tempo de Atendimento'];
     const rows = filteredLeads.map(lead => [
