@@ -141,9 +141,9 @@ body {
 
 .search-container {
     position: relative;
-    min-width: 20rem;
+    min-width: 15rem; /* Changed */
     flex: 1;
-    max-width: 24rem;
+    max-width: 20rem; /* Changed */
 }
 
 .search-icon {
@@ -206,6 +206,12 @@ body {
 #pageSizeSelect {
     min-width: auto; /* Override general .filter-select min-width */
     width: 8rem;    /* Set a specific, smaller width */
+}
+
+input[type="date"].filter-select {
+    min-width: auto; /* Override general .filter-select min-width */
+    width: 8rem;   /* Changed from 10rem */
+    /* Date inputs handle their own padding and icon spacing well with this width */
 }
 
 .filter-actions {
@@ -986,4 +992,63 @@ body.dark-mode .page-number:focus {
 
 body.dark-mode .page-number.active:focus {
     box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5), 0 0 0 2px rgba(59, 130, 246, 0.4); /* Combine with existing active shadow */
+}
+
+/* Dark Mode overrides for Litepicker */
+body.dark-mode .litepicker {
+    background-color: #1f2937; /* Match modal body background - Tailwind gray-800 */
+    border-color: #374151;     /* Tailwind gray-700 for borders */
+    color: #e5e7eb;            /* Light gray text - Tailwind gray-200 */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5), 0 10px 20px rgba(0,0,0,0.5); /* Match modal shadow */
+}
+
+body.dark-mode .litepicker .container__months,
+body.dark-mode .litepicker .container__tooltip {
+    background-color: #1f2937; /* Ensure inner containers also get dark bg */
+}
+
+body.dark-mode .litepicker .month-item-header,
+body.dark-mode .litepicker .month-item-weekdays > div {
+    color: #f3f4f6; /* Brighter text for headers/weekdays - Tailwind gray-100 */
+}
+
+body.dark-mode .litepicker .day-item {
+    color: #d1d5db; /* Default day text - Tailwind gray-300 */
+}
+
+body.dark-mode .litepicker .day-item:hover:not(.is-disabled):not(.is-selected):not(.is-start-date):not(.is-end-date) {
+    background-color: #374151; /* Hover background - Tailwind gray-700 */
+    border-radius: 50%;
+}
+body.dark-mode .litepicker .day-item.is-disabled {
+    color: #4b5563; /* Disabled day text - Tailwind gray-600 */
+}
+
+body.dark-mode .litepicker .day-item.is-selected,
+body.dark-mode .litepicker .day-item.is-start-date,
+body.dark-mode .litepicker .day-item.is-end-date {
+    background-color: #3b82f6; /* Selected day background - Tailwind blue-500 */
+    color: white;
+    border-radius: 50%;
+}
+body.dark-mode .litepicker .day-item.is-in-range:not(.is-selected):not(.is-start-date):not(.is-end-date) {
+    background-color: rgba(59, 130, 246, 0.2); /* In-range background - Tailwind blue-500 with opacity */
+    border-radius: 0;
+}
+
+
+body.dark-mode .litepicker .button-previous-month,
+body.dark-mode .litepicker .button-next-month {
+    color: #9ca3af; /* Tailwind gray-400 for nav buttons */
+}
+body.dark-mode .litepicker .button-previous-month:hover,
+body.dark-mode .litepicker .button-next-month:hover {
+    background-color: #374151; /* Tailwind gray-700 */
+    border-radius: 50%;
+}
+
+body.dark-mode .litepicker select { /* For month/year dropdowns if they appear */
+    background-color: #374151;
+    color: #e5e7eb;
+    border-color: #4b5563;
 }

@@ -30,6 +30,18 @@ const pageSizeSelect = document.getElementById('pageSizeSelect');
 const darkModeToggle = document.getElementById('darkModeToggle');
 const body = document.body;
 
+// Dark Mode Elements (added for this task)
+// ... (darkModeToggle and body are already here)
+
+// Date Filter Elements
+// const startDateFilter = document.getElementById('startDateFilter'); // Old, to be removed by Litepicker
+// const endDateFilter = document.getElementById('endDateFilter');   // Old, to be removed by Litepicker
+const dateRangeFilter = document.getElementById('dateRangeFilter'); // New for Litepicker
+
+
+// Global Variables for Litepicker selected dates
+let selectedStartDate = null;
+let selectedEndDate = null;
 
 // Sample data (simulating API response)
 const sampleData = {
@@ -209,7 +221,15 @@ function hideLoading() {
     loadingSpinner.classList.remove('show');
 }
 
+function formatDateForInput(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
 function formatDate(date) {
+    // This existing function is for display, keep it as is.
     return new Intl.DateTimeFormat('pt-BR', {
         day: '2-digit',
         month: '2-digit',
@@ -291,6 +311,19 @@ function applyFilters() {
     const statusValue = statusFilter.value;
     const consultantValue = consultantFilter.value;
     const queueValue = queueFilter.value;
+
+    // Use global selectedStartDate and selectedEndDate populated by Litepicker
+    let filterStartDate = null;
+    if (selectedStartDate) {
+        filterStartDate = new Date(selectedStartDate); // Clone to avoid modifying the global state directly
+        filterStartDate.setHours(0, 0, 0, 0);
+    }
+
+    let filterEndDate = null;
+    if (selectedEndDate) {
+        filterEndDate = new Date(selectedEndDate); // Clone
+        filterEndDate.setHours(23, 59, 59, 999);
+    }
     
     filteredLeads = allLeads.filter(lead => {
         // Search filter
@@ -311,8 +344,13 @@ function applyFilters() {
         // Queue filter
         const matchesQueue = !queueValue ||
             lead.queue === queueValue;
+
+        // Date filter conditions
+        // lead.createdAt is already a Date object from initial data processing
+        const matchesStartDate = !filterStartDate || lead.createdAt >= filterStartDate;
+        const matchesEndDate = !filterEndDate || lead.createdAt <= filterEndDate;
         
-        return matchesSearch && matchesStatus && matchesConsultant && matchesQueue;
+        return matchesSearch && matchesStatus && matchesConsultant && matchesQueue && matchesStartDate && matchesEndDate;
     });
     
     // Apply sorting
@@ -686,6 +724,35 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize Lucide icons (this will also render the initial dark mode toggle icon)
     if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // Initialize Litepicker
+    if (dateRangeFilter) { // Check if the element exists
+        const today = new Date();
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(today.getDate() - 30);
+
+        // Store initial dates in global vars for applyFilters to use on first load
+        selectedStartDate = thirtyDaysAgo; // JS Date object
+        selectedEndDate = today;       // JS Date object
+
+        new Litepicker({
+            element: dateRangeFilter,
+            singleMode: false, // Range selection
+            autoApply: true,
+            format: 'DD/MM/YYYY', // Display format in the input field
+            separator: ' - ',
+            startDate: selectedStartDate, // Initial start date for the picker (JS Date object)
+            endDate: selectedEndDate,   // Initial end date for the picker (JS Date object)
+            setup: (picker) => {
+                picker.on('selected', (date1, date2) => {
+                    // These are Litepicker date objects, get JS Date instances
+                    selectedStartDate = date1 ? date1.dateInstance : null;
+                    selectedEndDate = date2 ? date2.dateInstance : null;
+                    filterAndDisplayLeads();
+                });
+            }
+        });
+    }
     
     // Load initial data
     fetchData();
@@ -695,6 +762,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (statusFilter) statusFilter.addEventListener('change', filterAndDisplayLeads);
     if (consultantFilter) consultantFilter.addEventListener('change', filterAndDisplayLeads);
     if (queueFilter) queueFilter.addEventListener('change', filterAndDisplayLeads);
+    // Old date filter listeners are no longer needed as Litepicker handles it.
     
     // Button event listeners
     if (refreshBtn) refreshBtn.addEventListener('click', fetchData);
