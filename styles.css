@@ -585,7 +585,12 @@ body {
 .modal-body {
     padding: 1.5rem;
     display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Added */
     gap: 1rem;
+}
+
+.modal-field-full-width {
+    grid-column: span 2;
 }
 
 .modal-field {

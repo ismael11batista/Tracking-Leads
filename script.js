@@ -522,10 +522,6 @@ function viewLeadDetails(leadId) {
                 <p class="modal-value">${lead.attendanceTime}</p>
             </div>
         ` : ''}
-        <div class="modal-field">
-            <label class="modal-label">Link Curto</label>
-            <p class="modal-link">${lead.shortLink}</p>
-        </div>
     `;
     
     modal.classList.add('show');
