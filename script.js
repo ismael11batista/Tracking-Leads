@@ -389,7 +389,6 @@ function displayLeads() {
                 </td>
                 <td>
                     <div class="consultant-info">
-                        <div class="consultant-avatar">${lead.consultant.initials}</div>
                         <span class="consultant-name">${lead.consultant.name}</span>
                     </div>
                 </td>
@@ -511,7 +510,6 @@ function viewLeadDetails(leadId) {
         <div class="modal-field">
             <label class="modal-label">Consultor</label>
             <div class="consultant-info">
-                <div class="consultant-avatar">${lead.consultant.initials}</div>
                 <span class="consultant-name">${lead.consultant.name}</span>
             </div>
         </div>
