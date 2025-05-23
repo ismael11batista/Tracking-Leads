@@ -369,6 +369,7 @@ body {
 .status-badge {
     display: inline-flex;
     align-items: center;
+    justify-content: center; /* Added */
     gap: 0.25rem;
     padding: 0.375rem 0.75rem;
     border-radius: 0.375rem;
@@ -378,6 +379,8 @@ body {
     letter-spacing: 0.025em;
     border: 1px solid transparent;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    min-width: 0; /* Added */
+    text-align: center; /* Added */
 }
 
 .status-attended {
@@ -396,6 +399,7 @@ body {
 .queue-badge {
     display: inline-flex;
     align-items: center;
+    justify-content: center; /* Added */
     padding: 0.375rem 0.75rem;
     border-radius: 0.375rem;
     font-size: 0.75rem;
@@ -406,6 +410,8 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.025em;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    min-width: 0; /* Added */
+    text-align: center; /* Added */
 }
 
 /* Consultant Info */

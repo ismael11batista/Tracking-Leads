@@ -408,7 +408,10 @@ function displayLeads() {
     }).join('');
     
     // Re-initialize Lucide icons after table rows are rendered
-    lucide.createIcons();
+    if (typeof lucide !== 'undefined') { // Good practice to check if lucide is loaded
+        lucide.createIcons();
+    }
+    adjustBadgeWidths(); // Call the new function
 }
 
 function updateStats() {
@@ -605,6 +608,68 @@ function handleSort(field) {
     lucide.createIcons(); // Refresh icons
     filterAndDisplayLeads();
 }
+
+// Function to adjust badge widths for consistency
+function adjustBadgeWidths() {
+    if (!leadsTableBody) return; // Ensure table body exists
+
+    // Adjust status badges
+    const statusBadges = leadsTableBody.querySelectorAll('.status-badge');
+    if (statusBadges.length > 0) {
+        let maxStatusWidth = 0;
+        // First, reset minWidth for all badges to allow natural width calculation
+        statusBadges.forEach(badge => {
+            badge.style.minWidth = ''; 
+        });
+
+        // Use requestAnimationFrame to ensure styles are applied and reflow happens
+        requestAnimationFrame(() => {
+            // Measure all badges after reset
+            statusBadges.forEach(badge => {
+                // Ensure badge is visible before measuring, otherwise offsetWidth can be 0
+                // This check might be overly cautious if badges are always visible when this runs
+                if (badge.offsetParent !== null) { 
+                    maxStatusWidth = Math.max(maxStatusWidth, badge.offsetWidth);
+                }
+            });
+
+            // Apply the calculated max width to all badges
+            // Only apply if a valid max width was found (greater than 0)
+            if (maxStatusWidth > 0) {
+                statusBadges.forEach(badge => {
+                    badge.style.minWidth = maxStatusWidth + 'px';
+                });
+            }
+        });
+    }
+
+    // Adjust queue badges
+    const queueBadges = leadsTableBody.querySelectorAll('.queue-badge');
+    if (queueBadges.length > 0) {
+        let maxQueueWidth = 0;
+        // First, reset minWidth for all badges
+        queueBadges.forEach(badge => {
+            badge.style.minWidth = '';
+        });
+
+        requestAnimationFrame(() => {
+            // Measure all badges after reset
+            queueBadges.forEach(badge => {
+                if (badge.offsetParent !== null) {
+                    maxQueueWidth = Math.max(maxQueueWidth, badge.offsetWidth);
+                }
+            });
+            
+            // Apply the calculated max width
+            if (maxQueueWidth > 0) {
+                queueBadges.forEach(badge => {
+                    badge.style.minWidth = maxQueueWidth + 'px';
+                });
+            }
+        });
+    }
+}
+
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
