@@ -4,7 +4,7 @@ let filteredLeads = [];
 let consultants = [];
 let queues = [];
 let currentPage = 1;
-let pageSize = 10;
+let pageSize = 100; // Changed from 10
 let sortField = null;
 let sortDirection = 'asc';
 

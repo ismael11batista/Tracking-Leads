@@ -205,7 +205,7 @@ body {
 
 #pageSizeSelect {
     min-width: auto; /* Override general .filter-select min-width */
-    width: 8rem;    /* Set a specific, smaller width */
+    width: 6rem;    /* Changed from 8rem */
 }
 
 input[type="date"].filter-select {
